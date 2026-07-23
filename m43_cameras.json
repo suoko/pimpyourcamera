@@ -20,17 +20,34 @@
       "Lumix 12MP First Gen (G1, GH1, GF1, GF2, G10)",
       "Lumix 12MP Compacts (GF3, GF5)",
       "Lumix 16MP Early Gen (G3, G5, G6, GX1, GH2)",
-      "Lumix 16MP Workhorses (GH3, GH4, G7, G85, GX7, GX85)",
+      "Lumix 16MP Workhorses (G80/G85, GH3, GH4, G7, GX7, GX85)",
       "Lumix 20MP Pre-2021 (GH5, GH5s, G9, GX8, GX9, G95)"
     ]
   },
   "targets": [
+    { "id": "classic_chrome", "name": "Fujifilm Classic Chrome (Muted, Hard Midtones)", "category": "camera" },
     { "id": "portra400", "name": "Kodak Portra 400 (Warm Neutral, Soft Shadows)", "category": "film" },
     { "id": "tri-x400", "name": "Kodak Tri-X 400 (High-Contrast B&W Grain)", "category": "film" },
     { "id": "cinestill800t", "name": "CineStill 800T (Cool/Tungsten Cinematic)", "category": "film" }
   ],
   "emulationRules": {
     "Panasonic": {
+      "classic_chrome": {
+        "base": "Photo Style: Standard",
+        "settings": {
+          "Contrast": "+1 or +2",
+          "Sharpness": "-1 or -2",
+          "Noise Reduction": "-4",
+          "Saturation": "-2 or -3",
+          "Highlight Curve": "-1 or -2",
+          "Shadow Curve": "+1",
+          "White Balance": "AWB (or Daylight Preset shifted A:+2, B:-1)",
+          "WB Grid Shift": "A:+3 (Amber), M:+1 to +2 (Magenta)",
+          "i.Dynamic": "Standard or Low",
+          "Exposure Compensation": "-1/3 to -2/3 EV"
+        },
+        "note": "Optimized for Lumix G80/G85 SOOC JPEG. Recreates Fujifilm Classic Chrome with punchy midtones, muted saturated colors, slightly protected highlights, and cool shadow-teal undertones."
+      },
       "portra400": {
         "base": "Photo Style: Natural / Flat",
         "settings": {
@@ -42,10 +59,46 @@
           "Sharpness": "-2",
           "Noise Reduction": "-2"
         },
-        "note": "Supported directly on Real Time LUT models (G9II, GH7)."
+        "note": "Warm neutral tones with soft, lifted shadow response."
+      },
+      "tri-x400": {
+        "base": "Photo Style: L.Monochrome / Monochrome",
+        "settings": {
+          "Contrast": "+2",
+          "Sharpness": "+1",
+          "Noise Reduction": "-4",
+          "Filter Effect": "Red or Orange",
+          "Highlight Curve": "+1",
+          "Shadow Curve": "+1"
+        },
+        "note": "High-contrast monochrome look with sensor-level grain emphasis."
+      },
+      "cinestill800t": {
+        "base": "Photo Style: Scenery or Standard",
+        "settings": {
+          "Contrast": "+1",
+          "Sharpness": "-1",
+          "Noise Reduction": "-3",
+          "Saturation": "-1",
+          "WB Grid Shift": "B:+3 (Blue), M:+1 (Magenta)",
+          "Highlight Curve": "-2",
+          "Shadow Curve": "+1"
+        },
+        "note": "Designed for low-light/night street photography to emulate tungsten cooling."
       }
     },
     "Olympus / OM System": {
+      "classic_chrome": {
+        "base": "Picture Mode: Muted",
+        "settings": {
+          "Contrast": "+1",
+          "Sharpness": "-1",
+          "Saturation": "-2",
+          "Gradation": "Normal",
+          "WB Compensation": "A:+3, G:-1"
+        },
+        "note": "Emulates muted colors with warm/amber highlights on Olympus sensor profiles."
+      },
       "portra400": {
         "base": "Picture Mode: Muted / Natural",
         "settings": {
@@ -66,6 +119,15 @@
           "Gradation": "High Key / Auto"
         },
         "note": "Utilize built-in digital Red filter effect."
+      },
+      "cinestill800t": {
+        "base": "Picture Mode: Cool / Custom WB",
+        "settings": {
+          "Contrast": "+1",
+          "Sharpness": "-1",
+          "WB Compensation": "A:-2, G:+2"
+        },
+        "note": "Night tungsten aesthetic."
       }
     }
   }
