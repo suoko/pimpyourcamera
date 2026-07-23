@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Camera Emulation Engine</title>
+    <style>
+        :root {
+            --bg-color: #121214;
+            --card-bg: #1e1e24;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border: #374151;
+            --highlight: #10b981;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 24px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+        }
+
+        header {
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0 0 8px 0;
+            font-size: 1.8rem;
+            color: var(--text-main);
+        }
+
+        header p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 640px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 1.1rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px 12px;
+            background-color: #121214;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        select:focus {
+            border-color: var(--accent);
+        }
+
+        .output-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+
+        .output-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--highlight);
+        }
+
+        .recipe-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .recipe-item {
+            background-color: #141418;
+            padding: 10px 14px;
+            border-radius: 6px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .recipe-item .title {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .recipe-item .val {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-top: 2px;
+        }
+
+        .badge {
+            background-color: rgba(59, 130, 246, 0.2);
+            color: var(--accent);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .notes {
+            margin-top: 16px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Camera Profile Emulation Engine</h1>
+        <p>Translate target aesthetic looks into native camera settings</p>
+    </header>
+
+    <div class="grid">
+        <!-- SOURCE CAMERA -->
+        <div class="card">
+            <h2>1. Camera You Own</h2>
+            <div class="form-group">
+                <label for="own-system">Sensor Format</label>
+                <select id="own-system" onchange="updateOwnCameras()"></select>
+            </div>
+            <div class="form-group">
+                <label for="own-brand">Brand</label>
+                <select id="own-brand" onchange="updateOwnCameras()"></select>
+            </div>
+            <div class="form-group">
+                <label for="own-camera">Camera Model</label>
+                <select id="own-camera" onchange="calculateRecipe()"></select>
+            </div>
+        </div>
+
+        <!-- TARGET LOOK -->
+        <div class="card">
+            <h2>2. Target Look to Mimic</h2>
+            <div class="form-group">
+                <label for="target-type">Target Category</label>
+                <select id="target-type" onchange="updateTargetProfiles()">
+                    <option value="film">Classic Film Stocks</option>
+                    <option value="camera">Other Camera Profile</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="target-profile">Target Profile / Look</label>
+                <select id="target-profile" onchange="calculateRecipe()"></select>
+            </div>
+        </div>
+    </div>
+
+    <!-- OUTPUT RECIPE -->
+    <div class="output-card">
+        <div class="output-header">
+            <h3 id="target-title-display">Recipe Settings</h3>
+            <span class="badge" id="camera-badge-display">Camera Base</span>
+        </div>
+        <div class="recipe-list" id="recipe-container">
+            <!-- Dynamic Recipe Outputs -->
+        </div>
+        <div class="notes" id="recipe-notes"></div>
+    </div>
+</div>
+
+<script>
+// --- DATABASE STRUCTURE ---
+
+// --- EXPANDED DATABASE STRUCTURE ---
+const DB = {
+    systems: ["Micro Four Thirds", "APS-C", "Full-Frame"],
+    brands: ["Fujifilm", "Sony", "Canon", "Nikon", "Panasonic", "Olympus / OM System", "Leica"],
+    
+    // Cameras Mapping: Format -> Brand -> [Models]
+    cameras: {
+        "Micro Four Thirds": {
+            "Olympus / OM System": [
+                // Recent Releases (< 5 Years)
+                "OM System OM-1 / OM-1 Mark II (2022-2024 - Stacked BSI 20MP)",
+                "OM System OM-5 (2022 - 20MP PDAF)",
+                "Olympus PEN E-P7 (2021 - 20MP Contrast)",
+                // Vintage / Older (> 5 Years) Grouped by Sensor Gen
+                "PEN Gen 1 (12MP - E-P1, E-P2, E-PL1, E-PL2)",
+                "PEN Gen 2 (12MP Fast AF - E-P3, E-PL3, E-PM1)",
+                "OM-D / PEN 16MP Classic (E-M5, E-M10, E-M10 II/III, E-PL5 to E-PL8)",
+                "OM-D 16MP High-End (E-M1, E-M5 Mark II)",
+                "OM-D / PEN 20MP Flagships (E-M1 II/III, E-M1X, E-M5 III, PEN-F, E-PL9/10)"
+            ],
+            "Panasonic": [
+                // Recent Releases (< 5 Years)
+                "Lumix GH7 (2024 - 25MP Phase Hybrid)",
+                "Lumix G9 II (2023 - 25MP Phase Hybrid)",
+                "Lumix GH6 (2022 - 25.2MP High Dynamic Range)",
+                "Lumix G100 / G100D (2020-2024 - 20MP Vlog)",
+                // Vintage / Older (> 5 Years) Grouped by Sensor Gen
+                "Lumix 12MP First Gen (G1, GH1, GF1, GF2, G10)",
+                "Lumix 12MP Compacts (GF3, GF5)",
+                "Lumix 16MP Early Gen (G3, G5, G6, GX1, GH2)",
+                "Lumix 16MP Workhorses (GH3, GH4, G7, G85, GX7, GX85)",
+                "Lumix 20MP Pre-2021 (GH5, GH5s, G9, GX8, GX9, G95)"
+            ]
+        },
+        "APS-C": {
+            "Fujifilm": [
+                // Recent (< 5 Years)
+                "X-T5 / X-H2 / X100VI (X-Trans V - 40MP)",
+                "X-H2s (X-Trans V Stacked - 26MP)",
+                "X-S20 / X-T50 (X-Trans V Processor)",
+                "X-E4 / X-T30 II (X-Trans IV)",
+                // Older (> 5 Years)
+                "X-Trans IV Classic (X-T3, X-T4, X-Pro3, X100V, X-S10)",
+                "X-Trans III (X-T2, X-Pro2, X-T20, X100F)",
+                "X-Trans I / II (X-Pro1, X-T1, X100S/T, X-E1/E2)"
+            ],
+            "Sony": [
+                "a6700 / FX30 (2022-2023 - 26MP BSI)",
+                "a6100 / a6400 / a6600 (2019 - 24MP)",
+                "a6000 / a6300 / a6500 (Legacy 24MP)",
+                "NEX Series (Legacy 16MP/24MP NEX-3/5/6/7)"
+            ],
+            "Canon": [
+                "EOS R7 / R10 / R50 / R100 (EOS R Crop Line)",
+                "EOS M Line (Legacy M50, M50 II, M6 II, M200)"
+            ],
+            "Nikon": [
+                "Z50 II / Z30 / Z fc (Z DX Line)"
+            ]
+        },
+        "Full-Frame": {
+            "Sony": [
+                // Recent (< 5 Years)
+                "a9 III (2024 - Global Shutter)",
+                "a7R V / a7CR (2022-2023 - 61MP)",
+                "a7 IV / a7C II (2021-2023 - 33MP)",
+                "a7S III / FX3 (2020-2021 - 12MP 4K)",
+                "a1 (2021 - 50MP)",
+                // Older (> 5 Years)
+                "a7 III / a7R III / a7S II / a9",
+                "a7 / a7 II Original Series"
+            ],
+            "Canon": [
+                "EOS R1 / R3 (2021-2024 - Flagships)",
+                "EOS R5 Mark II / R5 (2020-2024 - 45MP)",
+                "EOS R6 Mark II / R6 / R8 (2020-2023 - 20/24MP)",
+                "EOS R / RP (Legacy EOS R)"
+            ],
+            "Nikon": [
+                "Z6 III / Z8 / Z9 (2021-2024 - Stacked / Semi-Stacked)",
+                "Zf / Z5 II / Z6 II / Z7 II (2020-2023)",
+                "Z6 / Z7 / Z5 (Original Z Series)"
+            ],
+            "Panasonic": [
+                "Lumix S5 II / S5 IIX / S9 (2023-2024 - Phase Hybrid)",
+                "Lumix S1 / S1R / S1H / S5 (Original S Series)"
+            ],
+            "Leica": [
+                "Leica SL3 / SL2-S / SL2",
+                "Leica M11 / M10 Digital Series"
+            ]
+        }
+    },
+
+    // Profiles/Presets available for emulation
+    targets: {
+        film: [
+            { id: "portra400", name: "Kodak Portra 400 (Warm Neutral, Soft Shadows)" },
+            { id: "tri-x400", name: "Kodak Tri-X 400 (High-Contrast B&W Grain)" },
+            { id: "cinestill800t", name: "CineStill 800T (Cool/Tungsten Cinematic)" },
+            { id: "classic_chrome", name: "Fujicolor Superia 400 (Muted Tones)" }
+        ],
+        camera: [
+            { id: "fuji_velvia", name: "Fujifilm Velvia (Vivid Landscape)" },
+            { id: "canon_portrait", name: "Canon Portrait Style (Rosy Skin Tones)" },
+            { id: "leica_monochrome", name: "Leica M Monochrom (Deep B&W Contrast)" },
+            { id: "arri_alexa", name: "ARRI LogC3 (Cinematic Flat/Wide Dynamic Range)" }
+        ]
+    },
+
+    // Translation Rules Matrix
+    emulationRules: {
+        "Fujifilm": {
+            "portra400": { base: "Classic Chrome", settings: { "Dynamic Range": "DR400", "Grain Effect": "Weak, Small", "Color Chrome FX": "Strong", "White Balance": "Auto R:+2 B:-4", "Highlight": "-1", "Shadow": "-1", "Color": "+1", "Sharpness": "-2" }, note: "Overexpose +1/3 to +2/3 stop." },
+            "tri-x400": { base: "ACROS (+R Filter)", settings: { "Grain Effect": "Strong, Large", "White Balance": "Daylight", "Highlight": "+2", "Shadow": "+1", "Sharpness": "+1", "Noise Reduction": "-4" }, note: "Use Acros Red filter mode in-camera." },
+            "cinestill800t": { base: "Eterna / Cinema", settings: { "Color Chrome FX Blue": "Strong", "White Balance": "3400K R:-1 B:+4", "Highlight": "0", "Shadow": "-1", "Color": "+2" }, note: "Ideal for neon night street photography." },
+            "canon_portrait": { base: "ASTIA / Soft", settings: { "White Balance": "Auto R:+1 B:-1", "Highlight": "-1", "Shadow": "-1", "Color": "+1" }, note: "Mimics Canon's rosy pink skin tones." }
+        },
+        "Sony": {
+            "portra400": { base: "Creative Look: IN / Portrait", settings: { "Contrast": "-2", "Highlights": "-1", "Shadows": "+1", "Fade": "+1", "Saturation": "0", "WB Shift": "A-B: B1.0, G-M: M0.5" }, note: "Use 'IN' look on newer models (a7IV, a6700) or 'Portrait' on older bodies." },
+            "tri-x400": { base: "Picture Profile / Black & White", settings: { "Contrast": "+2", "Shadows": "-1", "Sharpening": "+1", "WB Shift": "Daylight" }, note: "Crushes darks slightly to replicate pushed film." },
+            "cinestill800t": { base: "Creative Look: FL", settings: { "Contrast": "+1", "Highlights": "-2", "Shadows": "+1", "Saturation": "+1", "WB Shift": "A-B: B3.0, G-M: G0.5" }, note: "Pushes cool bias into shadow zones." }
+        },
+        "Canon": {
+            "portra400": { base: "Picture Style: Neutral", settings: { "Sharpness": "2", "Contrast": "-2", "Saturation": "+1", "Color Tone": "+1", "WB Shift": "A2, G1" }, note: "Flattens initial response before shifting warmth." },
+            "fuji_velvia": { base: "Picture Style: Landscape", settings: { "Sharpness": "4", "Contrast": "+2", "Saturation": "+3", "Color Tone": "0", "WB Shift": "B1, G1" }, note: "Drives blues and greens into high saturation." }
+        },
+        "Nikon": {
+            "portra400": { base: "Picture Control: Portrait / Neutral", settings: { "Quick Sharp": "-1", "Contrast": "-1.5", "Highlights": "-1", "Shadows": "+1", "Saturation": "0", "WB Fine-Tune": "A: 1.5, M: 0.25" }, note: "Seamless integration with Nikon Picture Controls." }
+        },
+        "Panasonic": {
+            "portra400": { base: "Photo Style: Natural / Flat", settings: { "Contrast": "-2", "Highlight": "-1", "Shadow": "+1", "Saturation": "+1", "Hue": "+1", "Sharpness": "-2" }, note: "Supported directly on Real Time LUT models (S5II, G9II, GH7)." }
+        },
+        "Olympus / OM System": {
+            "portra400": { base: "Picture Mode: Muted / Natural", settings: { "Contrast": "-1", "Sharpness": "-2", "Gradation": "Normal", "Color Creator": "Warm Shift +1", "WB Compensation": "A:+2, G:-1" }, note: "Turn Off Noise Filter for natural organic grain." },
+            "tri-x400": { base: "Picture Mode: Monochrome (Filter: Red)", settings: { "Contrast": "+2", "Sharpness": "+1", "Monochrome Color": "Neutral", "Gradation": "High Key / Auto" }, note: "Utilize built-in digital Red filter effect." }
+        }
+    }
+};
+
+// --- DOM INITIALIZATION ---
+window.addEventListener('DOMContentLoaded', () => {
+    initSelectOptions('own-system', DB.systems);
+    initSelectOptions('own-brand', DB.brands);
+    updateOwnCameras();
+    updateTargetProfiles();
+});
+
+function initSelectOptions(elemId, optionsArray) {
+    const select = document.getElementById(elemId);
+    select.innerHTML = '';
+    optionsArray.forEach(opt => {
+        const el = document.createElement('option');
+        el.value = opt;
+        el.textContent = opt;
+        select.appendChild(el);
+    });
+}
+
+function updateOwnCameras() {
+    const format = document.getElementById('own-system').value;
+    const brand = document.getElementById('own-brand').value;
+    const cameraSelect = document.getElementById('own-camera');
+    
+    cameraSelect.innerHTML = '';
+    
+    if (DB.cameras[format] && DB.cameras[format][brand]) {
+        DB.cameras[format][brand].forEach(cam => {
+            const el = document.createElement('option');
+            el.value = cam;
+            el.textContent = cam;
+            cameraSelect.appendChild(el);
+        });
+    } else {
+        const el = document.createElement('option');
+        el.textContent = "No profiles loaded for selection";
+        cameraSelect.appendChild(el);
+    }
+    calculateRecipe();
+}
+
+function updateTargetProfiles() {
+    const type = document.getElementById('target-type').value;
+    const targetSelect = document.getElementById('target-profile');
+    targetSelect.innerHTML = '';
+    
+    DB.targets[type].forEach(target => {
+        const el = document.createElement('option');
+        el.value = target.id;
+        el.textContent = target.name;
+        targetSelect.appendChild(el);
+    });
+    calculateRecipe();
+}
+
+function calculateRecipe() {
+    const brand = document.getElementById('own-brand').value;
+    const targetId = document.getElementById('target-profile').value;
+    const targetType = document.getElementById('target-type').value;
+    
+    const container = document.getElementById('recipe-container');
+    const badge = document.getElementById('camera-badge-display');
+    const title = document.getElementById('target-title-display');
+    const notes = document.getElementById('recipe-notes');
+    
+    container.innerHTML = '';
+    
+    // Find target name
+    const targetObj = DB.targets[targetType].find(t => t.id === targetId);
+    title.textContent = targetObj ? targetObj.name : "Custom Recipe";
+
+    // Lookup rule
+    const brandRules = DB.emulationRules[brand];
+    const rule = (brandRules && brandRules[targetId]) ? brandRules[targetId] : null;
+
+    if (!rule) {
+        badge.textContent = `${brand} Profile`;
+        container.innerHTML = `<div style="grid-column: 1/-1; color: var(--text-muted); text-align: center; padding: 20px;">
+            No direct matrix stored for ${brand} mimicking this specific target profile yet.<br>
+            <small>Try selecting <strong>Kodak Portra 400</strong> or changing your target profile.</small>
+        </div>`;
+        notes.textContent = "";
+        return;
+    }
+
+    // Render Base
+    badge.textContent = `Base Profile: ${rule.base}`;
+
+    // Render Settings
+    for (const [key, val] of Object.entries(rule.settings)) {
+        const div = document.createElement('div');
+        div.className = 'recipe-item';
+        div.innerHTML = `
+            <div class="title">${key}</div>
+            <div class="val">${val}</div>
+        `;
+        container.appendChild(div);
+    }
+
+    notes.textContent = rule.note ? `Note: ${rule.note}` : "";
+}
+</script>
+
+</body>
+</html>
