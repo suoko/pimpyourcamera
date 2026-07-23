@@ -1,0 +1,71 @@
+{
+  "system": "Full-Frame",
+  "brands": ["Sony", "Canon", "Nikon", "Panasonic", "Leica"],
+  "cameras": {
+    "Sony": [
+      "a9 III (2024 - Global Shutter)",
+      "a7R V / a7CR (2022-2023 - 61MP)",
+      "a7 IV / a7C II (2021-2023 - 33MP)",
+      "a7S III / FX3 (2020-2021 - 12MP 4K)",
+      "a1 (2021 - 50MP)",
+      "a7 III / a7R III / a7S II / a9",
+      "a7 / a7 II Original Series"
+    ],
+    "Canon": [
+      "EOS R1 / R3 (2021-2024 - Flagships)",
+      "EOS R5 Mark II / R5 (2020-2024 - 45MP)",
+      "EOS R6 Mark II / R6 / R8 (2020-2023 - 20/24MP)",
+      "EOS R / RP (Legacy EOS R)"
+    ],
+    "Nikon": [
+      "Z6 III / Z8 / Z9 (2021-2024 - Stacked / Semi-Stacked)",
+      "Zf / Z5 II / Z6 II / Z7 II (2020-2023)",
+      "Z6 / Z7 / Z5 (Original Z Series)"
+    ],
+    "Panasonic": [
+      "Lumix S5 II / S5 IIX / S9 (2023-2024 - Phase Hybrid)",
+      "Lumix S1 / S1R / S1H / S5 (Original S Series)"
+    ],
+    "Leica": [
+      "Leica SL3 / SL2-S / SL2",
+      "Leica M11 / M10 Digital Series"
+    ]
+  },
+  "targets": [
+    { "id": "portra400", "name": "Kodak Portra 400 (Warm Neutral, Soft Shadows)", "category": "film" },
+    { "id": "cinestill800t", "name": "CineStill 800T (Cool/Tungsten Cinematic)", "category": "film" },
+    { "id": "leica_monochrome", "name": "Leica M Monochrom (Deep B&W Contrast)", "category": "camera" },
+    { "id": "arri_alexa", "name": "ARRI LogC3 (Cinematic Flat/Wide Dynamic Range)", "category": "camera" }
+  ],
+  "emulationRules": {
+    "Sony": {
+      "portra400": {
+        "base": "Creative Look: IN (Instant)",
+        "settings": {
+          "Contrast": "-2",
+          "Highlights": "-1",
+          "Shadows": "+1",
+          "Fade": "+1",
+          "Saturation": "0",
+          "Sharpness": "-1",
+          "WB Shift": "A-B: B1.0, G-M: M0.5"
+        },
+        "note": "Available on Sony models with Creative Look menu (a7IV, a7C II)."
+      }
+    },
+    "Nikon": {
+      "portra400": {
+        "base": "Picture Control: Portrait / Neutral",
+        "settings": {
+          "Quick Sharp": "-1",
+          "Contrast": "-1.5",
+          "Highlights": "-1",
+          "Shadows": "+1",
+          "Saturation": "0",
+          "WB Fine-Tune": "A: 1.5, M: 0.25"
+        },
+        "note": "Works seamlessly with Nikon Picture Control settings."
+      }
+    }
+  }
+}

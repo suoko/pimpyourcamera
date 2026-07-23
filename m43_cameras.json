@@ -1,0 +1,72 @@
+{
+  "system": "Micro Four Thirds",
+  "brands": ["Panasonic", "Olympus / OM System"],
+  "cameras": {
+    "Olympus / OM System": [
+      "OM System OM-1 / OM-1 Mark II (2022-2024 - Stacked BSI 20MP)",
+      "OM System OM-5 (2022 - 20MP PDAF)",
+      "Olympus PEN E-P7 (2021 - 20MP Contrast)",
+      "PEN Gen 1 (12MP - E-P1, E-P2, E-PL1, E-PL2)",
+      "PEN Gen 2 (12MP Fast AF - E-P3, E-PL3, E-PM1)",
+      "OM-D / PEN 16MP Classic (E-M5, E-M10, E-M10 II/III, E-PL5 to E-PL8)",
+      "OM-D 16MP High-End (E-M1, E-M5 Mark II)",
+      "OM-D / PEN 20MP Flagships (E-M1 II/III, E-M1X, E-M5 III, PEN-F, E-PL9/10)"
+    ],
+    "Panasonic": [
+      "Lumix GH7 (2024 - 25MP Phase Hybrid)",
+      "Lumix G9 II (2023 - 25MP Phase Hybrid)",
+      "Lumix GH6 (2022 - 25.2MP High Dynamic Range)",
+      "Lumix G100 / G100D (2020-2024 - 20MP Vlog)",
+      "Lumix 12MP First Gen (G1, GH1, GF1, GF2, G10)",
+      "Lumix 12MP Compacts (GF3, GF5)",
+      "Lumix 16MP Early Gen (G3, G5, G6, GX1, GH2)",
+      "Lumix 16MP Workhorses (GH3, GH4, G7, G85, GX7, GX85)",
+      "Lumix 20MP Pre-2021 (GH5, GH5s, G9, GX8, GX9, G95)"
+    ]
+  },
+  "targets": [
+    { "id": "portra400", "name": "Kodak Portra 400 (Warm Neutral, Soft Shadows)", "category": "film" },
+    { "id": "tri-x400", "name": "Kodak Tri-X 400 (High-Contrast B&W Grain)", "category": "film" },
+    { "id": "cinestill800t", "name": "CineStill 800T (Cool/Tungsten Cinematic)", "category": "film" }
+  ],
+  "emulationRules": {
+    "Panasonic": {
+      "portra400": {
+        "base": "Photo Style: Natural / Flat",
+        "settings": {
+          "Contrast": "-2",
+          "Highlight": "-1",
+          "Shadow": "+1",
+          "Saturation": "+1",
+          "Hue": "+1",
+          "Sharpness": "-2",
+          "Noise Reduction": "-2"
+        },
+        "note": "Supported directly on Real Time LUT models (G9II, GH7)."
+      }
+    },
+    "Olympus / OM System": {
+      "portra400": {
+        "base": "Picture Mode: Muted / Natural",
+        "settings": {
+          "Contrast": "-1",
+          "Sharpness": "-2",
+          "Gradation": "Normal",
+          "Color Creator": "Warm Shift +1",
+          "WB Compensation": "A:+2, G:-1"
+        },
+        "note": "Turn Off Noise Filter for natural organic grain."
+      },
+      "tri-x400": {
+        "base": "Picture Mode: Monochrome (Filter: Red)",
+        "settings": {
+          "Contrast": "+2",
+          "Sharpness": "+1",
+          "Monochrome Color": "Neutral",
+          "Gradation": "High Key / Auto"
+        },
+        "note": "Utilize built-in digital Red filter effect."
+      }
+    }
+  }
+}

@@ -131,7 +131,7 @@
 
         .recipe-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 12px;
         }
 
@@ -149,7 +149,7 @@
         }
 
         .recipe-item .val {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             color: var(--text-main);
             margin-top: 2px;
@@ -170,6 +170,13 @@
             color: var(--text-muted);
             font-style: italic;
         }
+
+        .loading-status {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
@@ -186,11 +193,11 @@
             <h2>1. Camera You Own</h2>
             <div class="form-group">
                 <label for="own-system">Sensor Format</label>
-                <select id="own-system" onchange="updateOwnCameras()"></select>
+                <select id="own-system" onchange="onSystemChange()"></select>
             </div>
             <div class="form-group">
                 <label for="own-brand">Brand</label>
-                <select id="own-brand" onchange="updateOwnCameras()"></select>
+                <select id="own-brand" onchange="onBrandChange()"></select>
             </div>
             <div class="form-group">
                 <label for="own-camera">Camera Model</label>
@@ -204,8 +211,9 @@
             <div class="form-group">
                 <label for="target-type">Target Category</label>
                 <select id="target-type" onchange="updateTargetProfiles()">
+                    <option value="all">All Targets</option>
                     <option value="film">Classic Film Stocks</option>
-                    <option value="camera">Other Camera Profile</option>
+                    <option value="camera">Other Camera Profiles</option>
                 </select>
             </div>
             <div class="form-group">
@@ -222,183 +230,104 @@
             <span class="badge" id="camera-badge-display">Camera Base</span>
         </div>
         <div class="recipe-list" id="recipe-container">
-            <!-- Dynamic Recipe Outputs -->
+            <div class="loading-status">Loading camera database...</div>
         </div>
         <div class="notes" id="recipe-notes"></div>
     </div>
 </div>
 
 <script>
-// --- DATABASE STRUCTURE ---
-
-// --- EXPANDED DATABASE STRUCTURE ---
+// Combined state loaded from JSON files
 const DB = {
-    systems: ["Micro Four Thirds", "APS-C", "Full-Frame"],
-    brands: ["Fujifilm", "Sony", "Canon", "Nikon", "Panasonic", "Olympus / OM System", "Leica"],
-    
-    // Cameras Mapping: Format -> Brand -> [Models]
-    cameras: {
-        "Micro Four Thirds": {
-            "Olympus / OM System": [
-                // Recent Releases (< 5 Years)
-                "OM System OM-1 / OM-1 Mark II (2022-2024 - Stacked BSI 20MP)",
-                "OM System OM-5 (2022 - 20MP PDAF)",
-                "Olympus PEN E-P7 (2021 - 20MP Contrast)",
-                // Vintage / Older (> 5 Years) Grouped by Sensor Gen
-                "PEN Gen 1 (12MP - E-P1, E-P2, E-PL1, E-PL2)",
-                "PEN Gen 2 (12MP Fast AF - E-P3, E-PL3, E-PM1)",
-                "OM-D / PEN 16MP Classic (E-M5, E-M10, E-M10 II/III, E-PL5 to E-PL8)",
-                "OM-D 16MP High-End (E-M1, E-M5 Mark II)",
-                "OM-D / PEN 20MP Flagships (E-M1 II/III, E-M1X, E-M5 III, PEN-F, E-PL9/10)"
-            ],
-            "Panasonic": [
-                // Recent Releases (< 5 Years)
-                "Lumix GH7 (2024 - 25MP Phase Hybrid)",
-                "Lumix G9 II (2023 - 25MP Phase Hybrid)",
-                "Lumix GH6 (2022 - 25.2MP High Dynamic Range)",
-                "Lumix G100 / G100D (2020-2024 - 20MP Vlog)",
-                // Vintage / Older (> 5 Years) Grouped by Sensor Gen
-                "Lumix 12MP First Gen (G1, GH1, GF1, GF2, G10)",
-                "Lumix 12MP Compacts (GF3, GF5)",
-                "Lumix 16MP Early Gen (G3, G5, G6, GX1, GH2)",
-                "Lumix 16MP Workhorses (GH3, GH4, G7, G85, GX7, GX85)",
-                "Lumix 20MP Pre-2021 (GH5, GH5s, G9, GX8, GX9, G95)"
-            ]
-        },
-        "APS-C": {
-            "Fujifilm": [
-                // Recent (< 5 Years)
-                "X-T5 / X-H2 / X100VI (X-Trans V - 40MP)",
-                "X-H2s (X-Trans V Stacked - 26MP)",
-                "X-S20 / X-T50 (X-Trans V Processor)",
-                "X-E4 / X-T30 II (X-Trans IV)",
-                // Older (> 5 Years)
-                "X-Trans IV Classic (X-T3, X-T4, X-Pro3, X100V, X-S10)",
-                "X-Trans III (X-T2, X-Pro2, X-T20, X100F)",
-                "X-Trans I / II (X-Pro1, X-T1, X100S/T, X-E1/E2)"
-            ],
-            "Sony": [
-                "a6700 / FX30 (2022-2023 - 26MP BSI)",
-                "a6100 / a6400 / a6600 (2019 - 24MP)",
-                "a6000 / a6300 / a6500 (Legacy 24MP)",
-                "NEX Series (Legacy 16MP/24MP NEX-3/5/6/7)"
-            ],
-            "Canon": [
-                "EOS R7 / R10 / R50 / R100 (EOS R Crop Line)",
-                "EOS M Line (Legacy M50, M50 II, M6 II, M200)"
-            ],
-            "Nikon": [
-                "Z50 II / Z30 / Z fc (Z DX Line)"
-            ]
-        },
-        "Full-Frame": {
-            "Sony": [
-                // Recent (< 5 Years)
-                "a9 III (2024 - Global Shutter)",
-                "a7R V / a7CR (2022-2023 - 61MP)",
-                "a7 IV / a7C II (2021-2023 - 33MP)",
-                "a7S III / FX3 (2020-2021 - 12MP 4K)",
-                "a1 (2021 - 50MP)",
-                // Older (> 5 Years)
-                "a7 III / a7R III / a7S II / a9",
-                "a7 / a7 II Original Series"
-            ],
-            "Canon": [
-                "EOS R1 / R3 (2021-2024 - Flagships)",
-                "EOS R5 Mark II / R5 (2020-2024 - 45MP)",
-                "EOS R6 Mark II / R6 / R8 (2020-2023 - 20/24MP)",
-                "EOS R / RP (Legacy EOS R)"
-            ],
-            "Nikon": [
-                "Z6 III / Z8 / Z9 (2021-2024 - Stacked / Semi-Stacked)",
-                "Zf / Z5 II / Z6 II / Z7 II (2020-2023)",
-                "Z6 / Z7 / Z5 (Original Z Series)"
-            ],
-            "Panasonic": [
-                "Lumix S5 II / S5 IIX / S9 (2023-2024 - Phase Hybrid)",
-                "Lumix S1 / S1R / S1H / S5 (Original S Series)"
-            ],
-            "Leica": [
-                "Leica SL3 / SL2-S / SL2",
-                "Leica M11 / M10 Digital Series"
-            ]
-        }
-    },
-
-    // Profiles/Presets available for emulation
-    targets: {
-        film: [
-            { id: "portra400", name: "Kodak Portra 400 (Warm Neutral, Soft Shadows)" },
-            { id: "tri-x400", name: "Kodak Tri-X 400 (High-Contrast B&W Grain)" },
-            { id: "cinestill800t", name: "CineStill 800T (Cool/Tungsten Cinematic)" },
-            { id: "classic_chrome", name: "Fujicolor Superia 400 (Muted Tones)" }
-        ],
-        camera: [
-            { id: "fuji_velvia", name: "Fujifilm Velvia (Vivid Landscape)" },
-            { id: "canon_portrait", name: "Canon Portrait Style (Rosy Skin Tones)" },
-            { id: "leica_monochrome", name: "Leica M Monochrom (Deep B&W Contrast)" },
-            { id: "arri_alexa", name: "ARRI LogC3 (Cinematic Flat/Wide Dynamic Range)" }
-        ]
-    },
-
-    // Translation Rules Matrix
-    emulationRules: {
-        "Fujifilm": {
-            "portra400": { base: "Classic Chrome", settings: { "Dynamic Range": "DR400", "Grain Effect": "Weak, Small", "Color Chrome FX": "Strong", "White Balance": "Auto R:+2 B:-4", "Highlight": "-1", "Shadow": "-1", "Color": "+1", "Sharpness": "-2" }, note: "Overexpose +1/3 to +2/3 stop." },
-            "tri-x400": { base: "ACROS (+R Filter)", settings: { "Grain Effect": "Strong, Large", "White Balance": "Daylight", "Highlight": "+2", "Shadow": "+1", "Sharpness": "+1", "Noise Reduction": "-4" }, note: "Use Acros Red filter mode in-camera." },
-            "cinestill800t": { base: "Eterna / Cinema", settings: { "Color Chrome FX Blue": "Strong", "White Balance": "3400K R:-1 B:+4", "Highlight": "0", "Shadow": "-1", "Color": "+2" }, note: "Ideal for neon night street photography." },
-            "canon_portrait": { base: "ASTIA / Soft", settings: { "White Balance": "Auto R:+1 B:-1", "Highlight": "-1", "Shadow": "-1", "Color": "+1" }, note: "Mimics Canon's rosy pink skin tones." }
-        },
-        "Sony": {
-            "portra400": { base: "Creative Look: IN / Portrait", settings: { "Contrast": "-2", "Highlights": "-1", "Shadows": "+1", "Fade": "+1", "Saturation": "0", "WB Shift": "A-B: B1.0, G-M: M0.5" }, note: "Use 'IN' look on newer models (a7IV, a6700) or 'Portrait' on older bodies." },
-            "tri-x400": { base: "Picture Profile / Black & White", settings: { "Contrast": "+2", "Shadows": "-1", "Sharpening": "+1", "WB Shift": "Daylight" }, note: "Crushes darks slightly to replicate pushed film." },
-            "cinestill800t": { base: "Creative Look: FL", settings: { "Contrast": "+1", "Highlights": "-2", "Shadows": "+1", "Saturation": "+1", "WB Shift": "A-B: B3.0, G-M: G0.5" }, note: "Pushes cool bias into shadow zones." }
-        },
-        "Canon": {
-            "portra400": { base: "Picture Style: Neutral", settings: { "Sharpness": "2", "Contrast": "-2", "Saturation": "+1", "Color Tone": "+1", "WB Shift": "A2, G1" }, note: "Flattens initial response before shifting warmth." },
-            "fuji_velvia": { base: "Picture Style: Landscape", settings: { "Sharpness": "4", "Contrast": "+2", "Saturation": "+3", "Color Tone": "0", "WB Shift": "B1, G1" }, note: "Drives blues and greens into high saturation." }
-        },
-        "Nikon": {
-            "portra400": { base: "Picture Control: Portrait / Neutral", settings: { "Quick Sharp": "-1", "Contrast": "-1.5", "Highlights": "-1", "Shadows": "+1", "Saturation": "0", "WB Fine-Tune": "A: 1.5, M: 0.25" }, note: "Seamless integration with Nikon Picture Controls." }
-        },
-        "Panasonic": {
-            "portra400": { base: "Photo Style: Natural / Flat", settings: { "Contrast": "-2", "Highlight": "-1", "Shadow": "+1", "Saturation": "+1", "Hue": "+1", "Sharpness": "-2" }, note: "Supported directly on Real Time LUT models (S5II, G9II, GH7)." }
-        },
-        "Olympus / OM System": {
-            "portra400": { base: "Picture Mode: Muted / Natural", settings: { "Contrast": "-1", "Sharpness": "-2", "Gradation": "Normal", "Color Creator": "Warm Shift +1", "WB Compensation": "A:+2, G:-1" }, note: "Turn Off Noise Filter for natural organic grain." },
-            "tri-x400": { base: "Picture Mode: Monochrome (Filter: Red)", settings: { "Contrast": "+2", "Sharpness": "+1", "Monochrome Color": "Neutral", "Gradation": "High Key / Auto" }, note: "Utilize built-in digital Red filter effect." }
-        }
-    }
+    systems: [],
+    dataBySystem: {} // Maps Format -> Loaded JSON Object
 };
 
-// --- DOM INITIALIZATION ---
-window.addEventListener('DOMContentLoaded', () => {
-    initSelectOptions('own-system', DB.systems);
-    initSelectOptions('own-brand', DB.brands);
-    updateOwnCameras();
-    updateTargetProfiles();
+// Files to fetch
+const JSON_FILES = [
+    'm43_cameras.json',
+    'apsc_cameras.json',
+    'ff_cameras.json'
+];
+
+// --- INITIALIZATION ---
+window.addEventListener('DOMContentLoaded', async () => {
+    await loadAllJSONFiles();
+    initApp();
 });
+
+// Fetch all 3 JSON files concurrently using Promise.all
+async function loadAllJSONFiles() {
+    try {
+        const responses = await Promise.all(JSON_FILES.map(file => fetch(file)));
+        
+        // Verify all fetched successfully
+        for (let res of responses) {
+            if (!res.ok) throw new Error(`HTTP error! Status: ${res.status} on ${res.url}`);
+        }
+
+        const jsonDatas = await Promise.all(responses.map(res => res.json()));
+
+        // Populate DB state
+        jsonDatas.forEach(data => {
+            const systemName = data.system;
+            DB.systems.push(systemName);
+            DB.dataBySystem[systemName] = data;
+        });
+
+    } catch (error) {
+        console.error("Error loading JSON files:", error);
+        document.getElementById('recipe-container').innerHTML = `
+            <div style="grid-column: 1/-1; color: #ef4444; text-align: center; padding: 20px;">
+                <strong>Failed to load JSON database files.</strong><br>
+                <small>Ensure <code>m43_cameras.json</code>, <code>apsc_cameras.json</code>, and <code>ff_cameras.json</code> are placed in the same folder as <code>index.html</code>.</small>
+            </div>`;
+    }
+}
+
+function initApp() {
+    if (DB.systems.length === 0) return;
+
+    // Populate systems dropdown
+    initSelectOptions('own-system', DB.systems);
+    onSystemChange();
+}
 
 function initSelectOptions(elemId, optionsArray) {
     const select = document.getElementById(elemId);
     select.innerHTML = '';
     optionsArray.forEach(opt => {
         const el = document.createElement('option');
-        el.value = opt;
-        el.textContent = opt;
+        el.value = typeof opt === 'object' ? opt.id : opt;
+        el.textContent = typeof opt === 'object' ? opt.name : opt;
         select.appendChild(el);
     });
 }
 
-function updateOwnCameras() {
-    const format = document.getElementById('own-system').value;
+function onSystemChange() {
+    const system = document.getElementById('own-system').value;
+    const systemData = DB.dataBySystem[system];
+    
+    if (!systemData) return;
+
+    // Update Brands dropdown
+    initSelectOptions('own-brand', systemData.brands);
+    
+    // Update Targets & Cameras
+    onBrandChange();
+    updateTargetProfiles();
+}
+
+function onBrandChange() {
+    const system = document.getElementById('own-system').value;
     const brand = document.getElementById('own-brand').value;
     const cameraSelect = document.getElementById('own-camera');
     
     cameraSelect.innerHTML = '';
-    
-    if (DB.cameras[format] && DB.cameras[format][brand]) {
-        DB.cameras[format][brand].forEach(cam => {
+    const systemData = DB.dataBySystem[system];
+
+    if (systemData && systemData.cameras[brand]) {
+        systemData.cameras[brand].forEach(cam => {
             const el = document.createElement('option');
             el.value = cam;
             el.textContent = cam;
@@ -406,30 +335,47 @@ function updateOwnCameras() {
         });
     } else {
         const el = document.createElement('option');
-        el.textContent = "No profiles loaded for selection";
+        el.textContent = "No camera models found";
         cameraSelect.appendChild(el);
     }
     calculateRecipe();
 }
 
 function updateTargetProfiles() {
+    const system = document.getElementById('own-system').value;
     const type = document.getElementById('target-type').value;
     const targetSelect = document.getElementById('target-profile');
+    
+    const systemData = DB.dataBySystem[system];
+    if (!systemData || !systemData.targets) return;
+
     targetSelect.innerHTML = '';
     
-    DB.targets[type].forEach(target => {
-        const el = document.createElement('option');
-        el.value = target.id;
-        el.textContent = target.name;
-        targetSelect.appendChild(el);
+    const filteredTargets = systemData.targets.filter(t => {
+        if (type === 'all') return true;
+        return t.category === type;
     });
+
+    if (filteredTargets.length === 0) {
+        const el = document.createElement('option');
+        el.textContent = "No targets available for this category";
+        targetSelect.appendChild(el);
+    } else {
+        filteredTargets.forEach(target => {
+            const el = document.createElement('option');
+            el.value = target.id;
+            el.textContent = target.name;
+            targetSelect.appendChild(el);
+        });
+    }
+
     calculateRecipe();
 }
 
 function calculateRecipe() {
+    const system = document.getElementById('own-system').value;
     const brand = document.getElementById('own-brand').value;
     const targetId = document.getElementById('target-profile').value;
-    const targetType = document.getElementById('target-type').value;
     
     const container = document.getElementById('recipe-container');
     const badge = document.getElementById('camera-badge-display');
@@ -438,26 +384,29 @@ function calculateRecipe() {
     
     container.innerHTML = '';
     
-    // Find target name
-    const targetObj = DB.targets[targetType].find(t => t.id === targetId);
+    const systemData = DB.dataBySystem[system];
+    if (!systemData) return;
+
+    // Find Target Object
+    const targetObj = systemData.targets ? systemData.targets.find(t => t.id === targetId) : null;
     title.textContent = targetObj ? targetObj.name : "Custom Recipe";
 
-    // Lookup rule
-    const brandRules = DB.emulationRules[brand];
+    // Lookup Rule
+    const brandRules = systemData.emulationRules ? systemData.emulationRules[brand] : null;
     const rule = (brandRules && brandRules[targetId]) ? brandRules[targetId] : null;
 
     if (!rule) {
         badge.textContent = `${brand} Profile`;
-        container.innerHTML = `<div style="grid-column: 1/-1; color: var(--text-muted); text-align: center; padding: 20px;">
-            No direct matrix stored for ${brand} mimicking this specific target profile yet.<br>
-            <small>Try selecting <strong>Kodak Portra 400</strong> or changing your target profile.</small>
-        </div>`;
+        container.innerHTML = `
+            <div style="grid-column: 1/-1; color: var(--text-muted); text-align: center; padding: 20px;">
+                No stored recipe matrix for <strong>${brand}</strong> matching this target profile yet.
+            </div>`;
         notes.textContent = "";
         return;
     }
 
     // Render Base
-    badge.textContent = `Base Profile: ${rule.base}`;
+    badge.textContent = `Base: ${rule.base}`;
 
     // Render Settings
     for (const [key, val] of Object.entries(rule.settings)) {
