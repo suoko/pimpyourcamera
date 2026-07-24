@@ -21,14 +21,18 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             margin: 0;
-            padding: 24px;
+            padding: 24px 24px 0 24px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
         }
 
         .container {
             width: 100%;
-            max-width: 900px;
+            max-width: 960px;
+            flex: 1;
         }
 
         header {
@@ -112,6 +116,7 @@
             border: 1px solid var(--border);
             border-radius: 8px;
             padding: 20px;
+            margin-bottom: 24px;
         }
 
         .output-header {
@@ -129,9 +134,43 @@
             color: var(--highlight);
         }
 
+        .output-body {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .output-body { grid-template-columns: 1fr; }
+        }
+
+        .sample-preview {
+            width: 100%;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background-color: #141418;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sample-preview img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .sample-preview .caption {
+            padding: 8px 12px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
         .recipe-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 12px;
         }
 
@@ -172,10 +211,34 @@
         }
 
         .loading-status {
+            grid-column: 1 / -1;
             text-align: center;
             padding: 20px;
             color: var(--text-muted);
             font-size: 0.9rem;
+        }
+
+        /* Footer styling */
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 20px 0 24px 0;
+            margin-top: auto;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -229,58 +292,80 @@
             <h3 id="target-title-display">Recipe Settings</h3>
             <span class="badge" id="camera-badge-display">Camera Base</span>
         </div>
-        <div class="recipe-list" id="recipe-container">
-            <div class="loading-status">Loading camera database...</div>
+        
+        <div class="output-body">
+            <!-- Sample Image Box -->
+            <div class="sample-preview" id="sample-box" style="display: none;">
+                <img id="sample-img" src="" alt="Target Sample">
+                <div class="caption" id="sample-caption">Target Look Sample</div>
+            </div>
+
+            <!-- Recipe Settings List -->
+            <div>
+                <div class="recipe-list" id="recipe-container">
+                    <div class="loading-status">Loading camera database...</div>
+                </div>
+                <div class="notes" id="recipe-notes"></div>
+            </div>
         </div>
-        <div class="notes" id="recipe-notes"></div>
     </div>
 </div>
 
+<footer>
+    Check out the project on <a href="https://github.com/suoko/pimpyourcamera" target="_blank" rel="noopener noreferrer">GitHub</a> — everybody is welcome to suggest or add anything!
+</footer>
+
 <script>
-// Combined state loaded from JSON files
+// Application State
 const DB = {
-    systems: [],
-    dataBySystem: {} // Maps Format -> Loaded JSON Object
+    targets: [],           // Loaded from targets.json
+    systems: [],           // List of available sensor systems
+    dataBySystem: {}       // Maps Format -> Loaded JSON Object
 };
 
-// Files to fetch
 const JSON_FILES = [
-    'm43_cameras.json',
-    'apsc_cameras.json',
-    'ff_cameras.json'
+    { key: 'm43', url: 'm43_cameras.json' },
+    { key: 'apsc', url: 'apsc_cameras.json' },
+    { key: 'ff', url: 'ff_cameras.json' }
 ];
 
-// --- INITIALIZATION ---
 window.addEventListener('DOMContentLoaded', async () => {
     await loadAllJSONFiles();
     initApp();
 });
 
-// Fetch all 3 JSON files concurrently using Promise.all
 async function loadAllJSONFiles() {
     try {
-        const responses = await Promise.all(JSON_FILES.map(file => fetch(file)));
-        
-        // Verify all fetched successfully
-        for (let res of responses) {
+        // Fetch targets.json AND camera JSON files in parallel
+        const targetsRes = await fetch('targets.json');
+        if (!targetsRes.ok) throw new Error("Failed to load targets.json");
+        const targetsData = await targetsRes.json();
+        DB.targets = targetsData.targets || [];
+
+        // Fetch camera system JSONs
+        const cameraResponses = await Promise.all(
+            JSON_FILES.map(item => fetch(item.url))
+        );
+
+        for (let res of cameraResponses) {
             if (!res.ok) throw new Error(`HTTP error! Status: ${res.status} on ${res.url}`);
         }
 
-        const jsonDatas = await Promise.all(responses.map(res => res.json()));
+        const cameraJsons = await Promise.all(cameraResponses.map(res => res.json()));
 
-        // Populate DB state
-        jsonDatas.forEach(data => {
+        // Map system data by its 'system' attribute (e.g. "Micro Four Thirds", "APS-C", "Full Frame")
+        cameraJsons.forEach(data => {
             const systemName = data.system;
             DB.systems.push(systemName);
             DB.dataBySystem[systemName] = data;
         });
 
     } catch (error) {
-        console.error("Error loading JSON files:", error);
+        console.error("Error loading database files:", error);
         document.getElementById('recipe-container').innerHTML = `
             <div style="grid-column: 1/-1; color: #ef4444; text-align: center; padding: 20px;">
                 <strong>Failed to load JSON database files.</strong><br>
-                <small>Ensure <code>m43_cameras.json</code>, <code>apsc_cameras.json</code>, and <code>ff_cameras.json</code> are placed in the same folder as <code>index.html</code>.</small>
+                <small>Ensure <code>targets.json</code>, <code>m43_cameras.json</code>, <code>apsc_cameras.json</code>, and <code>ff_cameras.json</code> are placed in the same directory.</small>
             </div>`;
     }
 }
@@ -326,7 +411,7 @@ function onBrandChange() {
     cameraSelect.innerHTML = '';
     const systemData = DB.dataBySystem[system];
 
-    if (systemData && systemData.cameras[brand]) {
+    if (systemData && systemData.cameras && systemData.cameras[brand]) {
         systemData.cameras[brand].forEach(cam => {
             const el = document.createElement('option');
             el.value = cam;
@@ -342,16 +427,13 @@ function onBrandChange() {
 }
 
 function updateTargetProfiles() {
-    const system = document.getElementById('own-system').value;
     const type = document.getElementById('target-type').value;
     const targetSelect = document.getElementById('target-profile');
     
-    const systemData = DB.dataBySystem[system];
-    if (!systemData || !systemData.targets) return;
-
     targetSelect.innerHTML = '';
     
-    const filteredTargets = systemData.targets.filter(t => {
+    // Filter globally loaded DB.targets
+    const filteredTargets = DB.targets.filter(t => {
         if (type === 'all') return true;
         return t.category === type;
     });
@@ -382,17 +464,30 @@ function calculateRecipe() {
     const title = document.getElementById('target-title-display');
     const notes = document.getElementById('recipe-notes');
     
+    // Sample Image UI Elements
+    const sampleBox = document.getElementById('sample-box');
+    const sampleImg = document.getElementById('sample-img');
+    const sampleCaption = document.getElementById('sample-caption');
+
     container.innerHTML = '';
     
-    const systemData = DB.dataBySystem[system];
-    if (!systemData) return;
-
-    // Find Target Object
-    const targetObj = systemData.targets ? systemData.targets.find(t => t.id === targetId) : null;
+    // Find Target Object from DB.targets
+    const targetObj = DB.targets.find(t => t.id === targetId);
     title.textContent = targetObj ? targetObj.name : "Custom Recipe";
 
-    // Lookup Rule
-    const brandRules = systemData.emulationRules ? systemData.emulationRules[brand] : null;
+    // Handle Sample Image display
+    if (targetObj && targetObj.sampleImage) {
+        sampleImg.src = targetObj.sampleImage.url;
+        sampleImg.alt = targetObj.sampleImage.alt || targetObj.name;
+        sampleCaption.textContent = targetObj.sampleImage.alt || "Target Sample Look";
+        sampleBox.style.display = 'flex';
+    } else {
+        sampleBox.style.display = 'none';
+    }
+
+    // Lookup Emulation Rule from Camera Data
+    const systemData = DB.dataBySystem[system];
+    const brandRules = (systemData && systemData.emulationRules) ? systemData.emulationRules[brand] : null;
     const rule = (brandRules && brandRules[targetId]) ? brandRules[targetId] : null;
 
     if (!rule) {

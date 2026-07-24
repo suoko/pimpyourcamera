@@ -1,70 +1,191 @@
 {
-  "system": "Full-Frame",
+  "system": "Full Frame",
   "brands": ["Sony", "Canon", "Nikon", "Panasonic", "Leica"],
+  "quickCustomInstructions": {
+    "title": "Quick Guide: How to Save Custom Presets on Full-Frame Cameras",
+    "Sony": "Set Exposure Mode → Menu → Shooting → Memory / [MR Camera Set] → Save to Memory Slot 1, 2, or 3.",
+    "Canon": "Dial in Picture Style & WB → Menu → Setup Menu (Wrench) → [Custom Shooting Mode (C1-C3)] → Register Settings.",
+    "Nikon": "Configure Picture Control & WB → Menu → Setup Menu → Save User Settings → Choose U1, U2, or U3.",
+    "Panasonic": "Set Mode Dial to P/A/S/M → Adjust Photo Style, WB Shift, and Tone Curve → Menu → [Custom] → [Cust. Set Mem.] → Choose C1, C2, or C3.",
+    "Leica": "Set Image Properties → Main Menu → User Profile → Manage Profiles → Save as Profile 1-6."
+  },
   "cameras": {
     "Sony": [
-      "a9 III (2024 - Global Shutter)",
-      "a7R V / a7CR (2022-2023 - 61MP)",
-      "a7 IV / a7C II (2021-2023 - 33MP)",
-      "a7S III / FX3 (2020-2021 - 12MP 4K)",
-      "a1 (2021 - 50MP)",
-      "a7 III / a7R III / a7S II / a9",
-      "a7 / a7 II Original Series"
+      "A7 Series (A7 IV, A7 III, A7C, A7C II)",
+      "A7R High-Res (A7R V, A7R IV, A7R III, A7CR)",
+      "A7S / FX Video (A7S III, FX3, ZV-E1)",
+      "Flagship (A1, A1 II, A9 III, A9 II, A9)"
     ],
     "Canon": [
-      "EOS R1 / R3 (2021-2024 - Flagships)",
-      "EOS R5 Mark II / R5 (2020-2024 - 45MP)",
-      "EOS R6 Mark II / R6 / R8 (2020-2023 - 20/24MP)",
-      "EOS R / RP (Legacy EOS R)"
+      "EOS R Flagship / High-Res (R3, R1, R5, R5 Mark II)",
+      "EOS R Enthusiast (R6, R6 Mark II, R8, R)",
+      "EOS RP / Entry FF"
     ],
     "Nikon": [
-      "Z6 III / Z8 / Z9 (2021-2024 - Stacked / Semi-Stacked)",
-      "Zf / Z5 II / Z6 II / Z7 II (2020-2023)",
-      "Z6 / Z7 / Z5 (Original Z Series)"
+      "Z High-Performance (Z9, Z8, Z6 III)",
+      "Z Standard / Retro (Z6 / II, Z7 / II, Z5, Z f)"
     ],
     "Panasonic": [
-      "Lumix S5 II / S5 IIX / S9 (2023-2024 - Phase Hybrid)",
-      "Lumix S1 / S1R / S1H / S5 (Original S Series)"
+      "S Series Phase Hybrid (S5 II, S5 IIx, S9)",
+      "S Series Classic (S5, S1, S1R, S1H)"
     ],
     "Leica": [
-      "Leica SL3 / SL2-S / SL2",
-      "Leica M11 / M10 Digital Series"
+      "SL System (SL3, SL2, SL2-S)",
+      "Q System (Q3, Q2)"
     ]
   },
-  "targets": [
-    { "id": "portra400", "name": "Kodak Portra 400 (Warm Neutral, Soft Shadows)", "category": "film" },
-    { "id": "cinestill800t", "name": "CineStill 800T (Cool/Tungsten Cinematic)", "category": "film" },
-    { "id": "leica_monochrome", "name": "Leica M Monochrom (Deep B&W Contrast)", "category": "camera" },
-    { "id": "arri_alexa", "name": "ARRI LogC3 (Cinematic Flat/Wide Dynamic Range)", "category": "camera" }
-  ],
   "emulationRules": {
     "Sony": {
+      "olympus_natural": {
+        "base": "Creative Look: NT (Neutral) / ST (Standard)",
+        "settings": {
+          "Contrast": "0",
+          "Highlights": "-1",
+          "Shadows": "0",
+          "Saturation": "+1",
+          "Sharpness": "-1",
+          "White Balance": "Auto A-B: A1, G-M: 0"
+        },
+        "note": "Warm, pleasing skin tones and balanced default dynamic range."
+      },
+      "classic_chrome": {
+        "base": "Picture Profile: PP2 or Creative Look: FL",
+        "settings": {
+          "Contrast": "+1",
+          "Highlights": "-2",
+          "Shadows": "+1",
+          "Fade": "+1",
+          "Saturation": "-2",
+          "Sharpness": "-2",
+          "White Balance": "Auto A-B: A1, G-M: M1"
+        },
+        "note": "Film-like desaturation with compressed highlight rolloff."
+      },
       "portra400": {
         "base": "Creative Look: IN (Instant)",
         "settings": {
-          "Contrast": "-2",
-          "Highlights": "-1",
+          "Contrast": "-1",
+          "Highlights": "-2",
           "Shadows": "+1",
           "Fade": "+1",
-          "Saturation": "0",
-          "Sharpness": "-1",
-          "WB Shift": "A-B: B1.0, G-M: M0.5"
+          "Saturation": "+1",
+          "Sharpness": "-2",
+          "White Balance": "Daylight A-B: A2, G-M: M1"
         },
-        "note": "Available on Sony models with Creative Look menu (a7IV, a7C II)."
+        "note": "Gentle contrast with warm golden highlights."
+      },
+      "tri-x400": {
+        "base": "Creative Look: BW",
+        "settings": {
+          "Contrast": "+2",
+          "Highlights": "+1",
+          "Shadows": "0",
+          "Sharpness": "+1"
+        },
+        "note": "Rich dark blacks and bright contrast for full-frame sensors."
+      },
+      "cinestill800t": {
+        "base": "Creative Look: SH (Soft High-Key)",
+        "settings": {
+          "Contrast": "+1",
+          "Highlights": "-3",
+          "Shadows": "+1",
+          "Saturation": "-1",
+          "White Balance": "Custom 3800K A-B: B3, G-M: G1"
+        },
+        "note": "Cool tungsten tint optimized for low-light noise performance."
+      }
+    },
+    "Canon": {
+      "classic_chrome": {
+        "base": "Picture Style: Neutral",
+        "settings": {
+          "Sharpness Strength": "2",
+          "Fineness": "1",
+          "Threshold": "1",
+          "Contrast": "+1",
+          "Saturation": "-2",
+          "Color Tone": "+1",
+          "WB Shift": "A2, G1"
+        },
+        "note": "Muted colors with controlled shadow depth using Canon color science."
+      },
+      "portra400": {
+        "base": "Picture Style: Portrait",
+        "settings": {
+          "Sharpness Strength": "2",
+          "Contrast": "-2",
+          "Saturation": "0",
+          "Color Tone": "+1",
+          "WB Shift": "A2, M1"
+        },
+        "note": "Flattering, soft portrait rendering with warm tone bias."
+      },
+      "tri-x400": {
+        "base": "Picture Style: Monochrome",
+        "settings": {
+          "Sharpness Strength": "4",
+          "Contrast": "+2",
+          "Filter Effect": "Red",
+          "Toning Effect": "None"
+        },
+        "note": "High-contrast monochrome with red filter tone separation."
+      },
+      "cinestill800t": {
+        "base": "Picture Style: Standard",
+        "settings": {
+          "Contrast": "+1",
+          "Saturation": "-1",
+          "WB Shift": "B3, G1"
+        },
+        "note": "Cold green/blue shift for night urban photography."
       }
     },
     "Nikon": {
-      "portra400": {
-        "base": "Picture Control: Portrait / Neutral",
+      "classic_chrome": {
+        "base": "Picture Control: Neutral / Muted",
         "settings": {
-          "Quick Sharp": "-1",
-          "Contrast": "-1.5",
+          "Quick Sharpen": "0",
+          "Contrast": "+1",
+          "Highlights": "-1",
+          "Shadows": "+1",
+          "Saturation": "-2",
+          "Hue": "+1",
+          "WB Shift": "A-B: A1.5, G-M: G0.5"
+        },
+        "note": "Understated tones with desaturated blue/green gamut."
+      },
+      "portra400": {
+        "base": "Picture Control: Portrait / Flat",
+        "settings": {
+          "Contrast": "-1",
           "Highlights": "-1",
           "Shadows": "+1",
           "Saturation": "0",
-          "WB Fine-Tune": "A: 1.5, M: 0.25"
+          "Hue": "0",
+          "WB Shift": "A-B: A2.0, G-M: M0.5"
         },
-        "note": "Works seamlessly with Nikon Picture Control settings."
+        "note": "Smooth pastel skin tones with open shadow details."
+      },
+      "tri-x400": {
+        "base": "Picture Control: Monochrome",
+        "settings": {
+          "Contrast": "+2",
+          "Filter Effects": "Red",
+          "Sharpening": "+2"
+        },
+        "note": "Classic street photography high-contrast black and white."
+      },
+      "cinestill800t": {
+        "base": "Picture Control: Standard",
+        "settings": {
+          "Contrast": "+1",
+          "Highlights": "-2",
+          "Shadows": "+1",
+          "Saturation": "-1",
+          "WB Shift": "A-B: B2.5, G-M: G1.0"
+        },
+        "note": "Cinematic cool tone palette."
       }
     }
   }

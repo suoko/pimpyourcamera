@@ -1,0 +1,64 @@
+{
+  "targets": [
+    {
+      "id": "olympus_natural",
+      "name": "Olympus Classic Natural (Warm Skin Tones & Rich Daily Color)",
+      "category": "camera",
+      "sampleImage": {
+        "url": "./images/olympus_natural.jpeg",
+        "filename": "olympus_natural.jpeg",
+        "alt": "Olympus Classic Natural color rendition sample"
+      }
+    },
+    {
+      "id": "olympus_vivid",
+      "name": "Olympus i-Enhance / Vivid (Punchy Blues, Foliage & Landscapes)",
+      "category": "camera",
+      "sampleImage": {
+        "url": "./images/olympus_vivid.webp",
+        "filename": "olympus_vivid.webp",
+        "alt": "Olympus Vivid landscape sample"
+      }
+    },
+    {
+      "id": "classic_chrome",
+      "name": "Fujifilm Classic Chrome (Muted, Hard Midtones)",
+      "category": "camera",
+      "sampleImage": {
+        "url": "./images/fujifilm_classic_chrome.jpeg",
+        "filename": "fujifilm_classic_chrome.jpeg",
+        "alt": "Fujifilm Classic Chrome muted color sample"
+      }
+    },
+    {
+      "id": "portra400",
+      "name": "Kodak Portra 400 (Warm Neutral, Soft Shadows)",
+      "category": "film",
+      "sampleImage": {
+        "url": "./images/kodak_portra_400.jpeg",
+        "filename": "kodak_portra_400.jpeg",
+        "alt": "Kodak Portra 400 warm tone sample"
+      }
+    },
+    {
+      "id": "tri-x400",
+      "name": "Kodak Tri-X 400 (High-Contrast B&W Grain)",
+      "category": "film",
+      "sampleImage": {
+        "url": "./images/kodak_trix_400.jpeg",
+        "filename": "kodak_trix_400.jpeg",
+        "alt": "Kodak Tri-X 400 high contrast B&W sample"
+      }
+    },
+    {
+      "id": "cinestill800t",
+      "name": "CineStill 800T (Cool/Tungsten Cinematic)",
+      "category": "film",
+      "sampleImage": {
+        "url": "./images/cinestill_800t.jpeg",
+        "filename": "cinestill_800t.jpeg",
+        "alt": "CineStill 800T night street photo sample"
+      }
+    }
+  ]
+}
