@@ -1,6 +1,16 @@
 {
   "targets": [
     {
+  "id": "kodak_gold",
+  "name": "Kodak Gold 200 (Warm Golden Tones, Saturated Reds & Yellows)",
+  "category": "film",
+  "sampleImage": {
+    "url": "./images/kodak_gold.jpeg",
+    "filename": "kodak_gold.jpeg",
+    "alt": "Kodak Gold warm sunny color film emulation sample"
+  }
+},
+    {
       "id": "olympus_natural",
       "name": "Olympus Classic Natural (Warm Skin Tones & Rich Daily Color)",
       "category": "camera",

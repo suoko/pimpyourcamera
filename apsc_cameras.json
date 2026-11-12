@@ -42,6 +42,18 @@
         },
         "note": "Smooth gradation with natural skin tones inspired by Olympus colors."
       },
+      "kodak_gold": {
+  "base": "Film Simulation: Classic Chrome or Astia",
+  "settings": {
+    "Dynamic Range": "DR200",
+    "Highlight": "0",
+    "Shadow": "+1",
+    "Color": "+2",
+    "Grain Effect": "Weak / Small",
+    "White Balance": "Daylight (5200K) R:+2, B:-2"
+  },
+  "note": "Delivers warm, vintage vacation vibes with rich golden highlights and prominent reds."
+},
       "olympus_vivid": {
         "base": "Film Simulation: Velvia / Vivid",
         "settings": {
@@ -132,6 +144,18 @@
         },
         "note": "Warm, creamy skin tones with soft shadow lift."
       },
+      "kodak_gold": {
+  "base": "Creative Look: VV (Vivid) or FL (Film)",
+  "settings": {
+    "Contrast": "+1",
+    "Highlights": "0",
+    "Shadows": "+1",
+    "Saturation": "+2",
+    "Sharpness": "-1",
+    "White Balance": "Daylight A-B: A2, G-M: M1"
+  },
+  "note": "Warm sunny color balance with enhanced yellow/red separation."
+},
       "tri-x400": {
         "base": "Creative Look: BW (Monochrome)",
         "settings": {

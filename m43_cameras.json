@@ -49,6 +49,20 @@
         },
         "note": "Ideal for daily shooting, portraits, and travel shots with warm skin tones and rich colors."
       },
+      "kodak_gold": {
+  "base": "Photo Style: Standard / Vivid",
+  "settings": {
+    "Contrast": "+1",
+    "Sharpness": "-1",
+    "Noise Reduction": "-2",
+    "Saturation": "+1",
+    "Highlight Curve": "0",
+    "Shadow Curve": "+1",
+    "WB Grid Shift": "A:+2 (Amber), M:+1 (Magenta)",
+    "i.Dynamic": "Low"
+  },
+  "note": "Recreates Kodak Gold's signature sunny, warm golden-hour palette with boosted reds and yellows."
+},
       "olympus_vivid": {
         "base": "Photo Style: Vivid",
         "settings": {
@@ -130,6 +144,18 @@
         },
         "note": "Muted colors with warm/amber highlights."
       },
+      "kodak_gold": {
+  "base": "Picture Mode: Natural / Vivid",
+  "settings": {
+    "Contrast": "+1",
+    "Sharpness": "-1",
+    "Saturation": "+1",
+    "Gradation": "Normal",
+    "WB Compensation": "A:+2, G:0",
+    "Color Creator": "Warm Shift +2"
+  },
+  "note": "Warm, cheerful consumer film look optimized for Olympus color science."
+},
       "portra400": {
         "base": "Picture Mode: Muted / Natural",
         "settings": {

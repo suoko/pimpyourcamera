@@ -48,6 +48,18 @@
         },
         "note": "Warm, pleasing skin tones and balanced default dynamic range."
       },
+      "kodak_gold": {
+  "base": "Creative Look: VV (Vivid) or NT (Neutral)",
+  "settings": {
+    "Contrast": "+1",
+    "Highlights": "0",
+    "Shadows": "+1",
+    "Saturation": "+2",
+    "Sharpness": "-1",
+    "White Balance": "Daylight A-B: A2, G-M: M1"
+  },
+  "note": "Golden hour color tone profile designed for full-frame sensor richness."
+},
       "classic_chrome": {
         "base": "Picture Profile: PP2 or Creative Look: FL",
         "settings": {
@@ -110,6 +122,17 @@
         },
         "note": "Muted colors with controlled shadow depth using Canon color science."
       },
+      "kodak_gold": {
+  "base": "Picture Style: Standard / Faithful",
+  "settings": {
+    "Contrast": "+1",
+    "Sharpness": "2",
+    "Saturation": "+1",
+    "Color Tone": "0",
+    "WB Shift": "A2, M1"
+  },
+  "note": "Combines Canon's natural skin warmth with a sunny golden shift."
+},
       "portra400": {
         "base": "Picture Style: Portrait",
         "settings": {
@@ -155,6 +178,18 @@
         },
         "note": "Understated tones with desaturated blue/green gamut."
       },
+      "kodak_gold": {
+  "base": "Picture Control: Standard / Vivid",
+  "settings": {
+    "Contrast": "+1",
+    "Highlights": "0",
+    "Shadows": "+1",
+    "Saturation": "+2",
+    "Hue": "0",
+    "WB Shift": "A-B: A2.0, G-M: M0.5"
+  },
+  "note": "Rich contrast and warm yellow-orange bias mimicking consumer analog stock."
+},
       "portra400": {
         "base": "Picture Control: Portrait / Flat",
         "settings": {
