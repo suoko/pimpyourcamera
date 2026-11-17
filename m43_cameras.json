@@ -187,5 +187,33 @@
         "note": "Cool night aesthetic."
       }
     }
-  }
+  },
+  "ross_portramax": {
+  "base": "Photo Style: Natural / Portrait",
+  "settings": {
+    "Contrast": "-1",
+    "Sharpness": "-1",
+    "Noise Reduction": "-3",
+    "Saturation": "+1",
+    "Highlight Curve": "-1",
+    "Shadow Curve": "+2",
+    "WB Grid Shift": "A:+3 (Amber), M:+2 (Magenta)",
+    "i.Dynamic": "Low"
+  },
+  "note": "Inspired by rossandhisjpegs' warm analog workflows. Features gorgeous golden skin tones, soft shadow rolloff, and rich magenta-amber balance."
+},
+"ross_classic_cuban": {
+  "base": "Photo Style: Standard / Scenery",
+  "settings": {
+    "Contrast": "+2",
+    "Sharpness": "0",
+    "Noise Reduction": "-2",
+    "Saturation": "-1",
+    "Highlight Curve": "-2",
+    "Shadow Curve": "+1",
+    "WB Grid Shift": "B:+2 (Blue), M:+2 (Magenta)",
+    "i.Dynamic": "Standard"
+  },
+  "note": "A moody, punchy street look featuring compressed highlights, deep shadows, and cinematic teal-magenta contrast."
+}
 }

@@ -179,5 +179,29 @@
         "note": "Teal/cyan shadows with cooler white balance shift."
       }
     }
-  }
+  },
+  "ross_portramax": {
+  "base": "Film Simulation: Classic Chrome or Astia",
+  "settings": {
+    "Dynamic Range": "DR400",
+    "Highlight": "-1",
+    "Shadow": "-1",
+    "Color": "+2",
+    "Grain Effect": "Weak / Large",
+    "White Balance": "Daylight R:+2, B:-4"
+  },
+  "note": "Ross's signature warm analog styling translated for APS-C sensors with rich red/yellow separation."
+},
+"ross_classic_cuban": {
+  "base": "Film Simulation: Classic Chrome",
+  "settings": {
+    "Dynamic Range": "DR200",
+    "Highlight": "+2",
+    "Shadow": "+2",
+    "Color": "-1",
+    "Color Chrome Effect": "Strong",
+    "White Balance": "Auto R:-1, B:+2"
+  },
+  "note": "High-contrast vintage street simulation with cinematic cool shadow tints."
+}
 }

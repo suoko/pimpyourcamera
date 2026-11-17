@@ -223,5 +223,29 @@
         "note": "Cinematic cool tone palette."
       }
     }
-  }
+  },
+  "ross_portramax": {
+  "base": "Creative Look: IN (Instant) or FL (Film)",
+  "settings": {
+    "Contrast": "-1",
+    "Highlights": "-2",
+    "Shadows": "+2",
+    "Saturation": "+1",
+    "Sharpness": "-2",
+    "White Balance": "Daylight A-B: A3, G-M: M2"
+  },
+  "note": "Full-frame adaptation of Ross's warm portramax recipe with soft highlight rolling and deep shadow breath."
+},
+"ross_classic_cuban": {
+  "base": "Creative Look: SH (Soft High-Key) or NT (Neutral)",
+  "settings": {
+    "Contrast": "+2",
+    "Highlights": "-2",
+    "Shadows": "+1",
+    "Saturation": "-1",
+    "Sharpness": "0",
+    "White Balance": "Custom / Cool A-B: B2, G-M: M2"
+  },
+  "note": "Rich cinematic look with deep stylized tones tailored for full-frame sensors."
+}
 }

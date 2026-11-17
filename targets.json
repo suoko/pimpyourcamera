@@ -69,6 +69,26 @@
         "filename": "cinestill_800t.jpeg",
         "alt": "CineStill 800T night street photo sample"
       }
-    }
+    },
+    {
+  "id": "ross_portramax",
+  "name": "rossandhisjpegs: Portramax (Warm Golden-Hour, Lifted Shadows)",
+  "category": "creator",
+  "sampleImage": {
+    "url": "./images/ross_portramax.jpeg",
+    "filename": "ross_portramax.jpeg",
+    "alt": "rossandhisjpegs Portramax film simulation sample photo"
+  }
+},
+{
+  "id": "ross_classic_cuban",
+  "name": "rossandhisjpegs: Classic Cuban (Moody Contrast, Deep Teal & Gold)",
+  "category": "creator",
+  "sampleImage": {
+    "url": "./images/ross_classic_cuban.jpeg",
+    "filename": "ross_classic_cuban.jpeg",
+    "alt": "rossandhisjpegs Classic Cuban street photo sample"
+  }
+}
   ]
 }
