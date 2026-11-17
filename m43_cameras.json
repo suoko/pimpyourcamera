@@ -130,7 +130,35 @@
           "Shadow Curve": "+1"
         },
         "note": "Tungsten street look."
-      }
+      },
+        "ross_portramax": {
+  "base": "Photo Style: Natural / Portrait",
+  "settings": {
+    "Contrast": "-1",
+    "Sharpness": "-1",
+    "Noise Reduction": "-3",
+    "Saturation": "+1",
+    "Highlight Curve": "-1",
+    "Shadow Curve": "+2",
+    "WB Grid Shift": "A:+3 (Amber), M:+2 (Magenta)",
+    "i.Dynamic": "Low"
+  },
+  "note": "Inspired by rossandhisjpegs' warm analog workflows. Features gorgeous golden skin tones, soft shadow rolloff, and rich magenta-amber balance."
+},
+"ross_classic_cuban": {
+  "base": "Photo Style: Standard / Scenery",
+  "settings": {
+    "Contrast": "+2",
+    "Sharpness": "0",
+    "Noise Reduction": "-2",
+    "Saturation": "-1",
+    "Highlight Curve": "-2",
+    "Shadow Curve": "+1",
+    "WB Grid Shift": "B:+2 (Blue), M:+2 (Magenta)",
+    "i.Dynamic": "Standard"
+  },
+  "note": "A moody, punchy street look featuring compressed highlights, deep shadows, and cinematic teal-magenta contrast."
+}
     },
     "Olympus / OM System": {
       "classic_chrome": {
@@ -185,35 +213,31 @@
           "WB Compensation": "A:-2, G:+2"
         },
         "note": "Cool night aesthetic."
-      }
-    }
-  },
-  "ross_portramax": {
-  "base": "Photo Style: Natural / Portrait",
+      },
+      "ross_portramax": {
+  "base": "Picture Mode: Natural / Muted",
   "settings": {
     "Contrast": "-1",
     "Sharpness": "-1",
-    "Noise Reduction": "-3",
     "Saturation": "+1",
-    "Highlight Curve": "-1",
-    "Shadow Curve": "+2",
-    "WB Grid Shift": "A:+3 (Amber), M:+2 (Magenta)",
-    "i.Dynamic": "Low"
+    "Gradation": "Normal (or Auto for lifted shadows)",
+    "WB Compensation": "A:+3, G:-2 (Amber & Magenta)",
+    "Color Creator": "Warm Shift +2"
   },
-  "note": "Inspired by rossandhisjpegs' warm analog workflows. Features gorgeous golden skin tones, soft shadow rolloff, and rich magenta-amber balance."
+  "note": "Olympus adaptation of rossandhisjpegs' warm analog style with soft highlight rolloff and rich amber-magenta balance."
 },
 "ross_classic_cuban": {
-  "base": "Photo Style: Standard / Scenery",
+  "base": "Picture Mode: Muted / Natural",
   "settings": {
     "Contrast": "+2",
     "Sharpness": "0",
-    "Noise Reduction": "-2",
     "Saturation": "-1",
-    "Highlight Curve": "-2",
-    "Shadow Curve": "+1",
-    "WB Grid Shift": "B:+2 (Blue), M:+2 (Magenta)",
-    "i.Dynamic": "Standard"
+    "Gradation": "Low Key (or Normal with Highlight -2 / Shadow +1)",
+    "WB Compensation": "A:-2, G:-2 (Blue & Magenta)",
+    "Color Creator": "Cool Shift -1"
   },
-  "note": "A moody, punchy street look featuring compressed highlights, deep shadows, and cinematic teal-magenta contrast."
+  "note": "Moody, high-contrast street look translated for Olympus sensors with deep shadows and teal-magenta separation."
 }
+    }
+  }
 }

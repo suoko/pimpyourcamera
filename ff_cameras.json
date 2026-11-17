@@ -48,18 +48,55 @@
         },
         "note": "Warm, pleasing skin tones and balanced default dynamic range."
       },
+      "olympus_vivid": {
+        "base": "Creative Look: VV (Vivid)",
+        "settings": {
+          "Contrast": "+1",
+          "Highlights": "0",
+          "Shadows": "0",
+          "Saturation": "+1",
+          "Sharpness": "0",
+          "White Balance": "Auto A-B: A1, G-M: M1"
+        },
+        "note": "Punchy blues and deep foliage colors inspired by Olympus Vivid."
+      },
+      "om5_default": {
+        "base": "Creative Look: NT (Neutral) / Standard",
+        "settings": {
+          "Contrast": "0",
+          "Highlights": "0",
+          "Shadows": "0",
+          "Saturation": "+1",
+          "Sharpness": "-1",
+          "White Balance": "Auto A-B: A1, G-M: 0"
+        },
+        "note": "Clean, unmapped neutral colors inspired by the default OM System color science."
+      },
+      "sony_a7iii_pastel": {
+        "base": "Creative Look: IN (Instant) or PP2 (Gamma: Still)",
+        "settings": {
+          "Contrast": "-2",
+          "Black Level / Shadows": "+2 (Lifted Blacks)",
+          "Saturation": "-1",
+          "Color Depth (Red)": "+2",
+          "White Balance": "Daylight / Warm Auto",
+          "WB Grid Shift": "A-B: A2, G-M: M1 (Magenta Shift)",
+          "Clarity / Detail": "-2"
+        },
+        "note": "Lifted blacks with warm red-saturation, slight magenta bias, and soft clarity for a pastel vintage feel."
+      },
       "kodak_gold": {
-  "base": "Creative Look: VV (Vivid) or NT (Neutral)",
-  "settings": {
-    "Contrast": "+1",
-    "Highlights": "0",
-    "Shadows": "+1",
-    "Saturation": "+2",
-    "Sharpness": "-1",
-    "White Balance": "Daylight A-B: A2, G-M: M1"
-  },
-  "note": "Golden hour color tone profile designed for full-frame sensor richness."
-},
+        "base": "Creative Look: VV (Vivid) or NT (Neutral)",
+        "settings": {
+          "Contrast": "+1",
+          "Highlights": "0",
+          "Shadows": "+1",
+          "Saturation": "+2",
+          "Sharpness": "-1",
+          "White Balance": "Daylight A-B: A2, G-M: M1"
+        },
+        "note": "Golden hour color tone profile designed for full-frame sensor richness."
+      },
       "classic_chrome": {
         "base": "Picture Profile: PP2 or Creative Look: FL",
         "settings": {
@@ -106,9 +143,77 @@
           "White Balance": "Custom 3800K A-B: B3, G-M: G1"
         },
         "note": "Cool tungsten tint optimized for low-light noise performance."
+      },
+      "ross_portramax": {
+        "base": "Creative Look: IN (Instant) or FL (Film)",
+        "settings": {
+          "Contrast": "-1",
+          "Highlights": "-2",
+          "Shadows": "+2",
+          "Saturation": "+1",
+          "Sharpness": "-2",
+          "White Balance": "Daylight A-B: A3, G-M: M2"
+        },
+        "note": "Full-frame adaptation of Ross's warm Portramax recipe with soft highlight rolloff and deep shadow breath."
+      },
+      "ross_classic_cuban": {
+        "base": "Creative Look: SH (Soft High-Key) or NT (Neutral)",
+        "settings": {
+          "Contrast": "+2",
+          "Highlights": "-2",
+          "Shadows": "+1",
+          "Saturation": "-1",
+          "Sharpness": "0",
+          "White Balance": "Custom / Cool A-B: B2, G-M: M2"
+        },
+        "note": "Rich cinematic look with deep stylized tones tailored for full-frame sensors."
       }
     },
     "Canon": {
+      "olympus_natural": {
+        "base": "Picture Style: Portrait",
+        "settings": {
+          "Contrast": "+1",
+          "Sharpness Strength": "2",
+          "Saturation": "+1",
+          "Color Tone": "0",
+          "WB Shift": "A1, M1"
+        },
+        "note": "Rich natural tones and pleasing skin reproduction."
+      },
+      "olympus_vivid": {
+        "base": "Picture Style: Landscape",
+        "settings": {
+          "Contrast": "+1",
+          "Sharpness Strength": "3",
+          "Saturation": "+1",
+          "Color Tone": "0",
+          "WB Shift": "A1, M1"
+        },
+        "note": "Deep blues and crisp greens for outdoor scenes."
+      },
+      "om5_default": {
+        "base": "Picture Style: Standard",
+        "settings": {
+          "Contrast": "0",
+          "Sharpness Strength": "2",
+          "Saturation": "0",
+          "Color Tone": "0",
+          "WB Shift": "A1, 0"
+        },
+        "note": "Balanced neutral colors inspired by OM System's default rendering."
+      },
+      "sony_a7iii_pastel": {
+        "base": "Picture Style: Neutral / Portrait",
+        "settings": {
+          "Contrast": "-2",
+          "Sharpness Strength": "1",
+          "Saturation": "0",
+          "Color Tone": "-1 (Red Warmth)",
+          "WB Shift": "A2, M2 (Warmth & Magenta Lift)"
+        },
+        "note": "Provides lifted shadows with warm, soft red pastel tones on Canon sensors."
+      },
       "classic_chrome": {
         "base": "Picture Style: Neutral",
         "settings": {
@@ -123,16 +228,16 @@
         "note": "Muted colors with controlled shadow depth using Canon color science."
       },
       "kodak_gold": {
-  "base": "Picture Style: Standard / Faithful",
-  "settings": {
-    "Contrast": "+1",
-    "Sharpness": "2",
-    "Saturation": "+1",
-    "Color Tone": "0",
-    "WB Shift": "A2, M1"
-  },
-  "note": "Combines Canon's natural skin warmth with a sunny golden shift."
-},
+        "base": "Picture Style: Standard / Faithful",
+        "settings": {
+          "Contrast": "+1",
+          "Sharpness": "2",
+          "Saturation": "+1",
+          "Color Tone": "0",
+          "WB Shift": "A2, M1"
+        },
+        "note": "Combines Canon's natural skin warmth with a sunny golden shift."
+      },
       "portra400": {
         "base": "Picture Style: Portrait",
         "settings": {
@@ -162,9 +267,76 @@
           "WB Shift": "B3, G1"
         },
         "note": "Cold green/blue shift for night urban photography."
+      },
+      "ross_portramax": {
+        "base": "Picture Style: Neutral / Portrait",
+        "settings": {
+          "Contrast": "-1",
+          "Sharpness Strength": "1",
+          "Saturation": "+1",
+          "Color Tone": "-1",
+          "WB Shift": "A3, M2"
+        },
+        "note": "Warm golden-hour aesthetic with soft shadow rolloff."
+      },
+      "ross_classic_cuban": {
+        "base": "Picture Style: Standard",
+        "settings": {
+          "Contrast": "+2",
+          "Sharpness Strength": "3",
+          "Saturation": "-1",
+          "Color Tone": "0",
+          "WB Shift": "B2, M2"
+        },
+        "note": "Moody, high-contrast street look with cool teal-magenta tones."
       }
     },
     "Nikon": {
+      "olympus_natural": {
+        "base": "Picture Control: Portrait",
+        "settings": {
+          "Contrast": "+1",
+          "Sharpening": "2",
+          "Saturation": "+1",
+          "Hue": "0",
+          "WB Shift": "A-B: A1.0, G-M: M1.0"
+        },
+        "note": "Warm skin tones and balanced daily color."
+      },
+      "olympus_vivid": {
+        "base": "Picture Control: Vivid",
+        "settings": {
+          "Contrast": "0",
+          "Sharpening": "3",
+          "Saturation": "+1",
+          "Hue": "0",
+          "WB Shift": "A-B: A1.0, G-M: M1.0"
+        },
+        "note": "Punchy landscapes with rich blues and greens."
+      },
+      "om5_default": {
+        "base": "Picture Control: Standard",
+        "settings": {
+          "Contrast": "0",
+          "Sharpening": "2",
+          "Saturation": "0",
+          "Hue": "0",
+          "WB Shift": "A-B: A1.0, G-M: 0"
+        },
+        "note": "True-to-life neutral color balance inspired by OM-5."
+      },
+      "sony_a7iii_pastel": {
+        "base": "Picture Control: Flat / Portrait",
+        "settings": {
+          "Contrast": "-2",
+          "Highlights": "-1",
+          "Shadows": "+2",
+          "Clarity": "-2",
+          "Saturation": "+1 (Red focus)",
+          "WB Shift": "A-B: A2.0, G-M: M1.0"
+        },
+        "note": "Mimics the low-contrast, lifted-black Sony A7 III pastel aesthetic."
+      },
       "classic_chrome": {
         "base": "Picture Control: Neutral / Muted",
         "settings": {
@@ -179,17 +351,17 @@
         "note": "Understated tones with desaturated blue/green gamut."
       },
       "kodak_gold": {
-  "base": "Picture Control: Standard / Vivid",
-  "settings": {
-    "Contrast": "+1",
-    "Highlights": "0",
-    "Shadows": "+1",
-    "Saturation": "+2",
-    "Hue": "0",
-    "WB Shift": "A-B: A2.0, G-M: M0.5"
-  },
-  "note": "Rich contrast and warm yellow-orange bias mimicking consumer analog stock."
-},
+        "base": "Picture Control: Standard / Vivid",
+        "settings": {
+          "Contrast": "+1",
+          "Highlights": "0",
+          "Shadows": "+1",
+          "Saturation": "+2",
+          "Hue": "0",
+          "WB Shift": "A-B: A2.0, G-M: M0.5"
+        },
+        "note": "Rich contrast and warm yellow-orange bias mimicking consumer analog stock."
+      },
       "portra400": {
         "base": "Picture Control: Portrait / Flat",
         "settings": {
@@ -221,31 +393,280 @@
           "WB Shift": "A-B: B2.5, G-M: G1.0"
         },
         "note": "Cinematic cool tone palette."
+      },
+      "ross_portramax": {
+        "base": "Picture Control: Flat / Portrait",
+        "settings": {
+          "Contrast": "-1",
+          "Highlights": "-1",
+          "Shadows": "+2",
+          "Saturation": "+1",
+          "WB Shift": "A-B: A3.0, G-M: M2.0"
+        },
+        "note": "Warm golden tones with lifted shadows and magenta-amber shift."
+      },
+      "ross_classic_cuban": {
+        "base": "Picture Control: Standard",
+        "settings": {
+          "Contrast": "+2",
+          "Highlights": "-2",
+          "Shadows": "+1",
+          "Saturation": "-1",
+          "WB Shift": "A-B: B2.0, G-M: M2.0"
+        },
+        "note": "High-contrast street aesthetic with cool teal-magenta separation."
+      }
+    },
+    "Panasonic": {
+      "olympus_natural": {
+        "base": "Photo Style: Portrait",
+        "settings": {
+          "Contrast": "+1",
+          "Sharpness": "-1",
+          "Noise Reduction": "-3",
+          "Saturation": "+1",
+          "AWB Shift": "A:+1, M:+1",
+          "i.Dynamic": "LOW"
+        },
+        "note": "Warm skin tones and rich daily colors inspired by Olympus."
+      },
+      "olympus_vivid": {
+        "base": "Photo Style: Vivid",
+        "settings": {
+          "Contrast": "0",
+          "Sharpness": "-1",
+          "Noise Reduction": "-3",
+          "Saturation": "0",
+          "AWB Shift": "A:+1, M:+1",
+          "i.Dynamic": "LOW"
+        },
+        "note": "Punchy blues and lush greenery for landscapes."
+      },
+      "om5_default": {
+        "base": "Photo Style: Natural / Standard",
+        "settings": {
+          "Contrast": "0",
+          "Sharpness": "-1",
+          "Noise Reduction": "-2",
+          "Saturation": "0",
+          "AWB Shift": "A:+1, M:0",
+          "i.Dynamic": "OFF or LOW"
+        },
+        "note": "Refined, true-to-life color rendering with gentle shadow detail."
+      },
+      "sony_a7iii_pastel": {
+        "base": "Photo Style: Flat / Portrait",
+        "settings": {
+          "Contrast": "-2",
+          "Sharpness": "-2",
+          "Noise Reduction": "-2",
+          "Saturation": "+1",
+          "WB Grid Shift": "A:+2, M:+2",
+          "Highlight / Shadow": "Highlight: -1, Shadow: +2"
+        },
+        "note": "Soft contrast with lifted shadows, warm red hue boost, and magenta tinting."
+      },
+      "classic_chrome": {
+        "base": "Photo Style: Standard",
+        "settings": {
+          "Contrast": "+1",
+          "Sharpness": "-1",
+          "Noise Reduction": "-4",
+          "Saturation": "-2",
+          "Highlight Curve": "-1",
+          "Shadow Curve": "+1",
+          "WB Grid Shift": "A:+3, M:+1"
+        },
+        "note": "Muted midtones and firm contrast."
+      },
+      "kodak_gold": {
+        "base": "Photo Style: Standard / Vivid",
+        "settings": {
+          "Contrast": "+1",
+          "Sharpness": "-1",
+          "Noise Reduction": "-2",
+          "Saturation": "+1",
+          "Highlight Curve": "0",
+          "Shadow Curve": "+1",
+          "WB Grid Shift": "A:+2 (Amber), M:+1 (Magenta)"
+        },
+        "note": "Sunny, warm golden-hour palette with boosted reds and yellows."
+      },
+      "portra400": {
+        "base": "Photo Style: Natural / Flat",
+        "settings": {
+          "Contrast": "-2",
+          "Highlight Curve": "-1",
+          "Shadow Curve": "+1",
+          "Saturation": "+1",
+          "Sharpness": "-2",
+          "Noise Reduction": "-2"
+        },
+        "note": "Warm neutral tones with soft shadow rolloff."
+      },
+      "tri-x400": {
+        "base": "Photo Style: L.Monochrome / L.Monochrome D",
+        "settings": {
+          "Contrast": "+2",
+          "Sharpness": "+1",
+          "Noise Reduction": "-4",
+          "Filter Effect": "Red or Orange",
+          "Grain Effect": "Medium or High"
+        },
+        "note": "High-contrast analog black and white."
+      },
+      "cinestill800t": {
+        "base": "Photo Style: Scenery or Standard",
+        "settings": {
+          "Contrast": "+1",
+          "Sharpness": "-1",
+          "Noise Reduction": "-3",
+          "Saturation": "-1",
+          "WB Grid Shift": "B:+3, M:+1",
+          "Highlight Curve": "-2",
+          "Shadow Curve": "+1"
+        },
+        "note": "Cool tungsten look for night street scenes."
+      },
+      "ross_portramax": {
+        "base": "Photo Style: Natural / Portrait",
+        "settings": {
+          "Contrast": "-1",
+          "Sharpness": "-1",
+          "Noise Reduction": "-3",
+          "Saturation": "+1",
+          "Highlight Curve": "-1",
+          "Shadow Curve": "+2",
+          "WB Grid Shift": "A:+3 (Amber), M:+2 (Magenta)",
+          "i.Dynamic": "Low"
+        },
+        "note": "Inspired by rossandhisjpegs' warm analog workflows (also available via LUMIX Lab LUTs)."
+      },
+      "ross_classic_cuban": {
+        "base": "Photo Style: Standard / Scenery",
+        "settings": {
+          "Contrast": "+2",
+          "Sharpness": "0",
+          "Noise Reduction": "-2",
+          "Saturation": "-1",
+          "Highlight Curve": "-2",
+          "Shadow Curve": "+1",
+          "WB Grid Shift": "B:+2 (Blue), M:+2 (Magenta)",
+          "i.Dynamic": "Standard"
+        },
+        "note": "Moody, punchy street look with compressed highlights and teal-magenta contrast."
+      }
+    },
+    "Leica": {
+      "olympus_natural": {
+        "base": "Film Style: Natural / Standard",
+        "settings": {
+          "Contrast": "0",
+          "Sharpness": "0",
+          "Saturation": "+1",
+          "White Balance": "Auto (Warm bias)"
+        },
+        "note": "Clean, organic color rendering with warm skin tones."
+      },
+      "olympus_vivid": {
+        "base": "Film Style: Vivid",
+        "settings": {
+          "Contrast": "+1",
+          "Sharpness": "0",
+          "Saturation": "+1",
+          "White Balance": "Daylight"
+        },
+        "note": "Deep skies and saturated greens with classic Leica micro-contrast."
+      },
+      "om5_default": {
+        "base": "Film Style: Standard",
+        "settings": {
+          "Contrast": "0",
+          "Sharpness": "0",
+          "Saturation": "0",
+          "White Balance": "Auto"
+        },
+        "note": "True-to-life, uncolored natural response."
+      },
+      "sony_a7iii_pastel": {
+        "base": "Film Style: Natural",
+        "settings": {
+          "Contrast": "-2",
+          "Sharpness": "-1",
+          "Saturation": "-1",
+          "White Balance": "Cloudy / Warm Shift"
+        },
+        "note": "Soft, low-contrast pastel look with warm highlights."
+      },
+      "classic_chrome": {
+        "base": "Film Style: Natural / Smooth",
+        "settings": {
+          "Contrast": "+1",
+          "Sharpness": "-1",
+          "Saturation": "-2",
+          "White Balance": "Daylight"
+        },
+        "note": "Desaturated documentary aesthetic with firm midtones."
+      },
+      "kodak_gold": {
+        "base": "Film Style: Vivid / Standard",
+        "settings": {
+          "Contrast": "+1",
+          "Sharpness": "0",
+          "Saturation": "+2",
+          "White Balance": "Cloudy (or 6000K)"
+        },
+        "note": "Rich golden warmth mimicking analog consumer film."
+      },
+      "portra400": {
+        "base": "Film Style: Natural",
+        "settings": {
+          "Contrast": "-1",
+          "Sharpness": "-1",
+          "Saturation": "0",
+          "White Balance": "Daylight / 5600K"
+        },
+        "note": "Gentle tonal rolloff and natural skin reproduction."
+      },
+      "tri-x400": {
+        "base": "Film Style: Monochrome High Contrast",
+        "settings": {
+          "Contrast": "+2",
+          "Sharpness": "+1",
+          "Saturation": "N/A"
+        },
+        "note": "Punchy, deep-black monochrome look."
+      },
+      "cinestill800t": {
+        "base": "Film Style: Standard",
+        "settings": {
+          "Contrast": "+1",
+          "Sharpness": "0",
+          "Saturation": "-1",
+          "White Balance": "Tungsten (3200K–3800K)"
+        },
+        "note": "Cool night aesthetic for artificial street lighting."
+      },
+      "ross_portramax": {
+        "base": "Film Style: Natural",
+        "settings": {
+          "Contrast": "-1",
+          "Sharpness": "-1",
+          "Saturation": "+1",
+          "White Balance": "6000K (Warm Golden Shift)"
+        },
+        "note": "Warm golden-hour aesthetic with soft shadow rolloff."
+      },
+      "ross_classic_cuban": {
+        "base": "Film Style: Standard",
+        "settings": {
+          "Contrast": "+2",
+          "Sharpness": "0",
+          "Saturation": "-1",
+          "White Balance": "4500K (Cool Documentary Shift)"
+        },
+        "note": "High-contrast street look with cool shadow separation."
       }
     }
-  },
-  "ross_portramax": {
-  "base": "Creative Look: IN (Instant) or FL (Film)",
-  "settings": {
-    "Contrast": "-1",
-    "Highlights": "-2",
-    "Shadows": "+2",
-    "Saturation": "+1",
-    "Sharpness": "-2",
-    "White Balance": "Daylight A-B: A3, G-M: M2"
-  },
-  "note": "Full-frame adaptation of Ross's warm portramax recipe with soft highlight rolling and deep shadow breath."
-},
-"ross_classic_cuban": {
-  "base": "Creative Look: SH (Soft High-Key) or NT (Neutral)",
-  "settings": {
-    "Contrast": "+2",
-    "Highlights": "-2",
-    "Shadows": "+1",
-    "Saturation": "-1",
-    "Sharpness": "0",
-    "White Balance": "Custom / Cool A-B: B2, G-M: M2"
-  },
-  "note": "Rich cinematic look with deep stylized tones tailored for full-frame sensors."
-}
+  }
 }
